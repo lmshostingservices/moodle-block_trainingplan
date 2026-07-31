@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/trainingplan/db" VERSION="2025112601"
+       COMMENT="Training Plan block tables"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <TABLES>
+
+    <!-- ================================
+         TABLE: block_trainingplan_units
+         ================================ -->
+    <TABLE NAME="block_trainingplan_units" COMMENT="Cohort-level unit metadata">
+      <FIELDS>
+        <FIELD NAME="id"             TYPE="int"     LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+        <FIELD NAME="cohortid"       TYPE="int"     LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="courseid"       TYPE="int"     LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="type"           TYPE="char"    LENGTH="20" NOTNULL="true" DEFAULT="core" />
+        <FIELD NAME="fee"            TYPE="number"  LENGTH="10" DECIMALS="2" NOTNULL="false" />
+        <FIELD NAME="duration"       TYPE="int"     LENGTH="10" NOTNULL="true" DEFAULT="30" COMMENT="Duration in days" />
+        <FIELD NAME="orderindex"     TYPE="int"     LENGTH="10" NOTNULL="true" DEFAULT="0" />
+        <FIELD NAME="timecreated"    TYPE="int"     LENGTH="10" NOTNULL="true" DEFAULT="0" />
+        <FIELD NAME="timemodified"   TYPE="int"     LENGTH="10" NOTNULL="true" DEFAULT="0" />
+      </FIELDS>
+
+      <KEYS>
+        <KEY NAME="primary"             TYPE="primary" FIELDS="id" />
+        <KEY NAME="cohort_course_unique" TYPE="unique"  FIELDS="cohortid, courseid" />
+      </KEYS>
+
+      <INDEXES>
+        <INDEX NAME="cohort_idx" FIELDS="cohortid" UNIQUE="false" />
+        <INDEX NAME="course_idx" FIELDS="courseid" UNIQUE="false" />
+      </INDEXES>
+    </TABLE>
+
+
+    <!-- =====================================
+         TABLE: block_trainingplan_schedule
+         ===================================== -->
+    <TABLE NAME="block_trainingplan_schedule" COMMENT="Per-student schedule and progress">
+      <FIELDS>
+        <FIELD NAME="id"           TYPE="int"      LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+        <FIELD NAME="userid"       TYPE="int"      LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="cohortid"     TYPE="int"      LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="courseid"     TYPE="int"      LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="startdate"    TYPE="int"      LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="enddate"      TYPE="int"      LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="progress"     TYPE="number"   LENGTH="10" DECIMALS="5" NOTNULL="true" DEFAULT="0" />
+        <FIELD NAME="status"       TYPE="char"     LENGTH="20" NOTNULL="true" DEFAULT="pending" />
+        <FIELD NAME="signdate"     TYPE="int"      LENGTH="10" NOTNULL="false" />
+        <FIELD NAME="signature"    TYPE="text"                 NOTNULL="false" />
+        <FIELD NAME="lastrisknotif" TYPE="int"     LENGTH="10" NOTNULL="true" DEFAULT="0" COMMENT="Unix time of last at-risk notification. Used for the 7-day cooldown." />
+        <FIELD NAME="timemodified" TYPE="int"      LENGTH="10" NOTNULL="true" DEFAULT="0" />
+      </FIELDS>
+
+      <KEYS>
+        <KEY NAME="primary"             TYPE="primary" FIELDS="id" />
+        <KEY NAME="user_cohort_course"  TYPE="unique"  FIELDS="userid, cohortid, courseid" />
+      </KEYS>
+
+      <INDEXES>
+        <INDEX NAME="user_idx"    FIELDS="userid" UNIQUE="false" />
+        <INDEX NAME="cohort_idx"  FIELDS="cohortid" UNIQUE="false" />
+        <INDEX NAME="status_idx"  FIELDS="status" UNIQUE="false" />
+      </INDEXES>
+    </TABLE>
+
+
+    <!-- ==========================================
+         TABLE: block_trainingplan_userseq
+         ========================================== -->
+    <TABLE NAME="block_trainingplan_userseq" COMMENT="User-specific ordered training plan sequence">
+      <FIELDS>
+        <FIELD NAME="id"             TYPE="int"     LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+        <FIELD NAME="userid"         TYPE="int"     LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="cohortid"       TYPE="int"     LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="courseid"       TYPE="int"     LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="orderindex"     TYPE="int"     LENGTH="10" NOTNULL="true" DEFAULT="0" />
+        <FIELD NAME="startdate"      TYPE="int"     LENGTH="10" NOTNULL="false" />
+        <FIELD NAME="enddate"        TYPE="int"     LENGTH="10" NOTNULL="false" />
+        <FIELD NAME="outcome"        TYPE="char"    LENGTH="10" NOTNULL="false" DEFAULT="NYS" />
+        <FIELD NAME="manualoverride" TYPE="int"     LENGTH="1"  NOTNULL="true" DEFAULT="0" />
+        <FIELD NAME="timemodified"   TYPE="int"     LENGTH="10" NOTNULL="false" DEFAULT="0" />
+      </FIELDS>
+
+      <KEYS>
+        <KEY NAME="primary"             TYPE="primary" FIELDS="id" />
+        <KEY NAME="user_cohort_course"  TYPE="unique"  FIELDS="userid, cohortid, courseid" />
+      </KEYS>
+
+      <INDEXES>
+        <INDEX NAME="user_idx"     FIELDS="userid" UNIQUE="false" />
+        <INDEX NAME="cohort_idx"   FIELDS="cohortid" UNIQUE="false" />
+        <INDEX NAME="course_idx"   FIELDS="courseid" UNIQUE="false" />
+        <INDEX NAME="order_idx"    FIELDS="orderindex" UNIQUE="false" />
+      </INDEXES>
+    </TABLE>
+
+
+    <!-- ================================================
+         TABLE: block_trainingplan_outcome_log
+         Audit trail — every outcome write goes through
+         helper::set_outcome() which inserts one row here.
+         ================================================ -->
+    <TABLE NAME="block_trainingplan_outcome_log" COMMENT="Audit log of every outcome change on block_trainingplan_userseq">
+      <FIELDS>
+        <FIELD NAME="id"          TYPE="int"  LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+        <FIELD NAME="userid"      TYPE="int"  LENGTH="10" NOTNULL="true" COMMENT="Student whose outcome changed" />
+        <FIELD NAME="courseid"    TYPE="int"  LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="cohortid"    TYPE="int"  LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="oldoutcome"  TYPE="char" LENGTH="10" NOTNULL="false" COMMENT="Previous outcome value (null for new rows)" />
+        <FIELD NAME="newoutcome"  TYPE="char" LENGTH="10" NOTNULL="true" />
+        <FIELD NAME="source"      TYPE="char" LENGTH="40" NOTNULL="true" COMMENT="One of: cron, observer:assessment_submitted, rebuild, manual_ui, marksheet" />
+        <FIELD NAME="changedby"   TYPE="int"  LENGTH="10" NOTNULL="true" COMMENT="Acting userid; 0 for system/cron" />
+        <FIELD NAME="timecreated" TYPE="int"  LENGTH="10" NOTNULL="true" />
+      </FIELDS>
+
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+      </KEYS>
+
+      <INDEXES>
+        <INDEX NAME="user_course_idx"    FIELDS="userid, courseid"        UNIQUE="false" />
+        <INDEX NAME="outcome_time_idx"   FIELDS="newoutcome, timecreated" UNIQUE="false" />
+      </INDEXES>
+    </TABLE>
+
+  </TABLES>
+</XMLDB>

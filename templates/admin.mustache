@@ -1,0 +1,79 @@
+<div class="trainingplan">
+<div class="ca-header">Training Plan</div>
+
+<div class="block_trainingplan-admin">
+  <div class="d-flex mb-3 gap-2 align-items-end flex-wrap">
+    <div>
+      <label class="form-label">{{#str}} cohort, block_trainingplan {{/str}}</label>
+      <select id="tp-cohort" class="form-select">
+        <option value="0">{{#str}} allcohorts, block_trainingplan {{/str}}</option>
+        {{#cohorts}}
+          <option value="{{id}}">{{name}}</option>
+        {{/cohorts}}
+      </select>
+    </div>
+    <div>
+      <label class="form-label">{{#str}} searchuser, block_trainingplan {{/str}}</label>
+      <input id="tp-search" type="text" class="form-control" placeholder="Search by name or email..." />
+    </div>
+    <div class="ms-auto d-flex gap-2 align-items-end">
+      <button id="tp-refresh" class="btn btn-sm btn-outline-secondary">&#x21bb; Refresh</button>
+      <button id="tp-export" class="btn btn-sm btn-outline-primary">&#x2193; Export CSV</button>
+      <button id="tp-send-reminder-btn" class="btn btn-sm btn-warning" disabled>Send Reminder to Selected</button>
+    </div>
+  </div>
+
+  <div id="tp-status" class="alert alert-info py-1 small" style="display:none;"></div>
+
+  {{#hasrows}}
+  <table class="table table-striped table-sm align-middle" id="tp-table">
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="tp-select-all" title="Select all"></th>
+        <th>{{#str}} student, block_trainingplan {{/str}}</th>
+        <th>{{#str}} email, core {{/str}}</th>
+        <th>{{#str}} cohort, block_trainingplan {{/str}}</th>
+        <th>{{#str}} course, core {{/str}}</th>
+        <th>{{#str}} startdate, block_trainingplan {{/str}}</th>
+        <th>{{#str}} enddate, block_trainingplan {{/str}}</th>
+        <th>{{#str}} progress, block_trainingplan {{/str}}</th>
+        <th>{{#str}} status, block_trainingplan {{/str}}</th>
+        <th>{{#str}} marksheet, block_trainingplan {{/str}}</th>
+        <th>{{#str}} signature, block_trainingplan {{/str}}</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+  {{/hasrows}}
+  <div id="tp-pagination" class="d-flex justify-content-between align-items-center mt-3">
+    <div>
+      <button id="tp-prev" class="btn btn-sm btn-outline-secondary">&laquo; Prev</button>
+      <button id="tp-next" class="btn btn-sm btn-outline-secondary">Next &raquo;</button>
+    </div>
+    <div class="text-muted small">
+      Page <span id="tp-page">1</span> of <span id="tp-pages">1</span>
+    </div>
+  </div>
+
+  {{^hasrows}}
+    <div class="alert alert-info">{{#str}} noplans, block_trainingplan {{/str}}</div>
+  {{/hasrows}}
+</div>
+</div>
+
+<!-- Send Reminder Modal -->
+<div id="tp-reminder-modal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.5);">
+  <div style="background:#fff; border-radius:6px; max-width:480px; margin:10vh auto; padding:24px; position:relative;">
+    <h5 class="mb-3">Send Reminder</h5>
+    <p class="text-muted small mb-2">This message will be sent to <strong id="tp-reminder-count">0</strong> selected learner(s) via Moodle messaging.</p>
+    <label class="form-label">Message</label>
+    <textarea id="tp-reminder-message" class="form-control mb-3" rows="5" placeholder="Enter reminder message..."></textarea>
+    <div class="d-flex gap-2 justify-content-end">
+      <button id="tp-reminder-cancel" class="btn btn-secondary btn-sm">Cancel</button>
+      <button id="tp-reminder-send" class="btn btn-warning btn-sm">Send</button>
+    </div>
+  </div>
+</div>

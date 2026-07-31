@@ -1,0 +1,51 @@
+.block_trainingplan-student .progress {
+  height: 18px;
+}
+.trainingplan-outcome-legend {
+  border: 1px solid #d7dfe7;
+  border-radius: 4px;
+  background: #f8fafc;
+  margin: 0 0 1rem;
+  padding: 0.75rem;
+}
+.trainingplan-outcome-legend span {
+  display: inline-block;
+  margin: 0.25rem 1rem 0 0;
+}
+.block_trainingplan-admin .form-label {
+  font-weight: 600;
+}
+#tp-pagination button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tp-course {
+  width: 280px;          
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Button width (small) */
+#tp-table .tp-course-btn {
+  width: 260px;            /* same width as menu */
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Dropdown menu width + wrapping */
+#tp-table .tp-course-menu {
+  width: 260px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+/* Force wrapping of long names */
+#tp-table .tp-course-menu .dropdown-item {
+  white-space: normal;     /* wrap */
+  word-break: break-word;  /* break long tokens */
+  line-height: 1.2;
+}

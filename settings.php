@@ -93,3 +93,13 @@ if ($ADMIN->fulltree) {
         PARAM_RAW_TRIMMED
     ));
 }
+
+// Exclude N/A-outcome units from the exported PDF (default: show them).
+// N/A rows are kept by default because silently omitting units from a signed
+// compliance document is risky; enable only if your compliance process allows it.
+$settings->add(new admin_setting_configcheckbox(
+    'block_trainingplan/pdf_hide_na',
+    get_string('pdf_hide_na', 'block_trainingplan'),
+    get_string('pdf_hide_na_desc', 'block_trainingplan'),
+    0
+));

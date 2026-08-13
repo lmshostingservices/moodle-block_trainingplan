@@ -62,6 +62,7 @@ class student_view implements renderable, templatable {
             $units = [];
             $signed = false;
             $signdate = null;
+            $signatureimg = null;
 
             foreach ($seqs as $seq) {
                 // N/A units are outside the plan, but completed/credit outcomes still
@@ -111,7 +112,30 @@ class student_view implements renderable, templatable {
                     ? max(1, round(($enddate - $startdate) / DAYSECS))
                     : 0;
 
-                $progress = $schedule ? (float)$schedule->progress : 0.0;
+                // The cached progress field is populated only by
+                // refresh_all_progress_cache(), which is never called, so it is
+                // always 0 and the bars render empty. Derive the bar from the
+                // live `status` field instead (prefer a real cached value if one
+                // ever exists).
+                $cachedprogress = $schedule ? (float)$schedule->progress : 0.0;
+                if ($cachedprogress > 0) {
+                    $progress = round($cachedprogress, 1);
+                } else {
+                    $schedstatus = $schedule ? (string)$schedule->status : '';
+                    switch ($schedstatus) {
+                        case 'completed':
+                        case 'CT':
+                        case 'RPL':
+                            $progress = 100.0;
+                            break;
+                        case 'active':
+                            $progress = 50.0;
+                            break;
+                        default: // pending, expired, na, empty.
+                            $progress = 0.0;
+                            break;
+                    }
+                }
 
                 $units[] = [
                     'unitname' => format_string($course->fullname),
@@ -134,6 +158,7 @@ class student_view implements renderable, templatable {
                 if (!$signed && $schedule && !empty($schedule->signdate)) {
                     $signed = true;
                     $signdate = $schedule->signdate;
+                    $signatureimg = !empty($schedule->signature) ? $schedule->signature : null;
                 }
             }
 
@@ -146,6 +171,7 @@ class student_view implements renderable, templatable {
                 'cohortid' => $cohort->id,
                 'signed' => $signed,
                 'signdate' => $signdate ? userdate($signdate) : null,
+                'signature' => $signatureimg,
                 'showsignbutton' => !$signed,
                 'units' => $units
             ];

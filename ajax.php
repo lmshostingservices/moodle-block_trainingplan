@@ -25,6 +25,40 @@
 
 define('NO_DEBUG_DISPLAY', true);
 require_once(__DIR__ . '/../../config.php');
+
+/**
+ * Derive a progress-bar percentage from a schedule row's status.
+ *
+ * The stored `progress` field is populated only by refresh_all_progress_cache(),
+ * which is never called anywhere in the codebase, so it is always 0 and the
+ * progress bars render empty. The `status` field, however, is live and correct.
+ * This maps status → a sensible bar percentage so the bar reflects real state.
+ * If a stored progress value ever exists (non-zero), it is preferred.
+ *
+ * @param string $status schedule status
+ * @param float|int|null $storedprogress the (usually 0) cached progress value
+ * @return float percentage 0–100
+ */
+function block_trainingplan_progress_from_status($status, $storedprogress = 0): float {
+    // Prefer a real cached value if one was ever written.
+    if ((float)$storedprogress > 0) {
+        return round((float)$storedprogress, 1);
+    }
+    switch ((string)$status) {
+        case 'completed':
+        case 'CT':  // Credit transfer — treated as complete.
+        case 'RPL': // Recognition of prior learning — complete.
+            return 100.0;
+        case 'active':
+            return 50.0;
+        case 'pending':
+        case 'expired':
+        case 'na':
+        default:
+            return 0.0;
+    }
+}
+
 $action = required_param('action', PARAM_ALPHANUMEXT);
 require_sesskey();
 require_login();
@@ -160,7 +194,7 @@ switch ($action) {
                 'coursename' => format_string($r->coursename),
                 'startdate'  => !empty($r->startdate) ? userdate($r->startdate) : '',
                 'enddate'    => !empty($r->enddate) ? userdate($r->enddate) : '',
-                'progress'   => round((float)$r->progress, 1),
+                'progress'   => block_trainingplan_progress_from_status($r->status, $r->progress),
                 'status'     => $r->status === 'na' ? 'N/A' : $r->status,
                 'signdate' => $r->signdate ? userdate($r->signdate, '%d %b %Y') : '',
                 'signature' => $r->signature ?? '',
@@ -277,7 +311,7 @@ switch ($action) {
                 'course'    => format_string($r->coursename),
                 'startdate' => !empty($r->startdate) ? date('d/m/Y', (int)$r->startdate) : '',
                 'enddate'   => !empty($r->enddate)   ? date('d/m/Y', (int)$r->enddate)   : '',
-                'progress'  => (float)$r->progress,
+                'progress'  => block_trainingplan_progress_from_status($r->status, $r->progress),
                 'status'    => $r->status === 'na' ? 'N/A' : $r->status,
                 'overdue'   => !in_array($r->status, ['completed', 'na'], true) && !empty($r->enddate) && (time() > (int)$r->enddate),
                 'completed' => $r->status === 'completed',

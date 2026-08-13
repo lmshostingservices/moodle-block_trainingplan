@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'block_trainingplan';
-$plugin->version   = 2026072100;
-$plugin->release   = '1.5.7';
+$plugin->version   = 2026080800004;
+$plugin->release   = '1.5.11';
 $plugin->requires  = 2024042200;
 $plugin->maturity  = MATURITY_STABLE;

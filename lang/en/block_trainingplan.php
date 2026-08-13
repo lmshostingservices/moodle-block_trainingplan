@@ -24,8 +24,6 @@
 
 $string['pluginname'] = 'Training Plan';
 $string['blockname'] = 'Training Plan';
-$string['trainingplan:addinstance'] = 'Add a new Training Plan block';
-$string['trainingplan:myaddinstance'] = 'Add a new Training Plan block to Dashboard';
 
 $string['signaccept'] = 'Sign & Accept Training Plan';
 $string['signdesc'] = 'By clicking Confirm, you acknowledge and accept your Training Plan schedule.';
@@ -61,7 +59,6 @@ $string['exportcsv'] = 'Export CSV';
 $string['signature'] = 'Signature';
 $string['marksheet'] = 'marksheet';
 $string['signed'] = 'Signed';
-$string['notsigned'] = 'Not signed';
 $string['pending'] = 'Pending';
 $string['notapplicable'] = 'Not applicable';
 
@@ -133,3 +130,5 @@ $string['excludedrecipients'] = 'Never send digests to (user IDs)';
 $string['excludedrecipients_desc'] = 'Comma-separated user IDs that will never receive the overdue digest, regardless of what role they hold. Useful for test accounts that have been given a teacher role, or for staff who should not be chased. Leave empty to send to every eligible trainer.';
 
 $string['privacy:metadata'] = 'The block_trainingplan plugin does not store any personal data.';
+$string['pdf_hide_na'] = 'Exclude N/A units from PDF export';
+$string['pdf_hide_na_desc'] = 'When enabled, units with an N/A outcome are omitted from the exported training plan PDF. Off by default — omitting units from a signed compliance document should be a deliberate, approved choice.';

@@ -1,4 +1,12 @@
 <?php
+/**
+ * block_trainingplan file.
+ *
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ */
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -24,7 +32,6 @@ use renderer_base;
 use stdClass;
 
 class admin_view implements renderable, templatable {
-
     public function export_for_template(renderer_base $output): stdClass {
         global $DB, $PAGE;
 

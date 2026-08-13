@@ -1,4 +1,12 @@
 <?php
+/**
+ * block_trainingplan file.
+ *
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ */
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -19,7 +27,6 @@ namespace block_trainingplan;
 defined('MOODLE_INTERNAL') || die();
 
 class observer {
-
     public static function cohort_member_added(\core\event\cohort_member_added $event): void {
         global $DB, $CFG;
         require_once($CFG->dirroot . '/cohort/lib.php');

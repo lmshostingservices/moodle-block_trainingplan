@@ -44,9 +44,11 @@ use block_trainingplan\local\notifier;
  *    which is gated by block_trainingplan/notificationsenabled (off by default)
  *    and the test recipient allowlist. Suppressed sends are logged, so a dry run
  *    tells you exactly who would have been mailed.
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
  */
 class send_overdue_digest extends \core\task\scheduled_task {
-
     /** Never list more than this many learners in one email. */
     private const MAX_ROWS = 50;
 

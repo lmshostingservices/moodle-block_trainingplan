@@ -21,6 +21,9 @@ defined('MOODLE_INTERNAL') || die();
  *
  * @param int $oldversion
  * @return bool
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
  */
 function xmldb_block_trainingplan_upgrade($oldversion) {
     global $DB;

@@ -1,12 +1,4 @@
 <?php
-/**
- * block_trainingplan file.
- *
- * @package    block_trainingplan
- * @copyright  2026 LMS-Labs
- * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
- */
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,10 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die();
+/**
+ * Privacy Subsystem implementation for block_trainingplan.
+ *
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ */
 
-$plugin->component = 'block_trainingplan';
-$plugin->version   = 2026072100;
-$plugin->release   = '1.5.7';
-$plugin->requires  = 2024042200;
-$plugin->maturity  = MATURITY_STABLE;
+namespace block_trainingplan\privacy;
+
+/**
+ * Privacy Subsystem for block_trainingplan implementing null_provider.
+ *
+ * @package block_trainingplan
+ */
+class provider implements \core_privacy\local\metadata\null_provider {
+    /**
+     * Returns a reason why no user data is stored.
+     *
+     * @return string
+     */
+    public static function get_reason(): string {
+        return 'privacy:metadata';
+    }
+}

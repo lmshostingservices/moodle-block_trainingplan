@@ -1,4 +1,12 @@
 <?php
+/**
+ * block_trainingplan file.
+ *
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ */
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -19,7 +27,6 @@ namespace block_trainingplan\output;
 defined('MOODLE_INTERNAL') || die();
 
 class renderer extends \plugin_renderer_base {
-
     public function render_student_view(student_view $view): string {
         $data = $view->export_for_template($this);
         return $this->render_from_template('block_trainingplan/student', $data);

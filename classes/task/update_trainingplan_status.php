@@ -1,4 +1,12 @@
 <?php
+/**
+ * block_trainingplan file.
+ *
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ */
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,7 +30,6 @@ require_once($CFG->libdir . '/completionlib.php');
 require_once($CFG->dirroot . '/completion/completion_completion.php');
 
 class update_trainingplan_status extends \core\task\scheduled_task {
-
     public function get_name(): string {
         return get_string('cron_update_trainingplan_status', 'block_trainingplan');
     }

@@ -36,6 +36,9 @@ defined('MOODLE_INTERNAL') || die();
  * So: email and popup are on. SMS and push are available but off. Nobody gets a
  * surprise text message the first time this runs, and an admin can still enable
  * SMS deliberately from Site administration > General > Messaging.
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
  */
 $messageproviders = [
 

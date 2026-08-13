@@ -1,4 +1,12 @@
 <?php
+/**
+ * block_trainingplan file.
+ *
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ */
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,7 +30,6 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/blocks/moodleblock.class.php'); 
 
 class block_trainingplan extends block_base {
-
     public function init(): void {
         $this->title = get_string('pluginname', 'block_trainingplan');
     }

@@ -36,9 +36,11 @@ defined('MOODLE_INTERNAL') || die();
  *
  * Suppressed sends are always logged, so the cron output tells you exactly who
  * WOULD have been notified without anything leaving the building.
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
  */
 class notifier {
-
     /**
      * Is the master kill switch on?
      */

@@ -1,4 +1,12 @@
 <?php
+/**
+ * block_trainingplan file.
+ *
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ */
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -180,7 +188,8 @@ switch ($action) {
         \block_trainingplan\local\helper::shift_schedule_from_first_unit($userid, $cohortid, $start);
         echo json_encode(['status' => 'ok']);
         // Return fresh rows for the same cohort to refresh UI.
-        $_GET['cohortid'] = $cohortid;
+        // Fall through: pass cohortid via local var to list_rows case below.
+        $fallthrough_cohortid = $cohortid;
         $action = 'list_rows';
         // fall through intentionally, so the list_rows case runs next
         break;
@@ -549,7 +558,7 @@ switch ($action) {
             break;
         }
 
-        $timeline = array_values(array_filter(array_map(function($s) {
+        $timeline = array_values(array_filter(array_map(function ($s) {
             return !empty($s->startdate) ? (int)$s->startdate : null;
         }, $slots)));
 

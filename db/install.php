@@ -34,6 +34,9 @@ defined('MOODLE_INTERNAL') || die();
  * Setting it here as well means both paths - fresh install and upgrade - are safe.
  *
  * @return bool
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
  */
 function xmldb_block_trainingplan_install() {
 

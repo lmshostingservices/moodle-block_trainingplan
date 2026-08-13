@@ -1,4 +1,12 @@
 <?php
+/**
+ * block_trainingplan file.
+ *
+ * @package    block_trainingplan
+ * @copyright  2026 LMS-Labs
+ * @license    http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3 or later
+ */
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -123,3 +131,5 @@ $string['cron_update_trainingplan_status'] = 'Update training plan status';
 
 $string['excludedrecipients'] = 'Never send digests to (user IDs)';
 $string['excludedrecipients_desc'] = 'Comma-separated user IDs that will never receive the overdue digest, regardless of what role they hold. Useful for test accounts that have been given a teacher role, or for staff who should not be chased. Leave empty to send to every eligible trainer.';
+
+$string['privacy:metadata'] = 'The block_trainingplan plugin does not store any personal data.';

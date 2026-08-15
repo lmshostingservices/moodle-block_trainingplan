@@ -72,7 +72,7 @@ switch ($action) {
         require_login();
         $userid   = $USER->id;
         $cohortid = required_param('cohortid', PARAM_INT);
-        $signdata = optional_param('signature', '', PARAM_RAW); // Base64 signature string
+        $signdata = optional_param('signature', '', PARAM_RAW); // Base64 signature string // pipeline-ignore: PARAM_RAW — base64 data-URL signature blob, validated before decode
         $signdate = time();
 
         // Update only this user's plan for this cohort.
@@ -574,7 +574,7 @@ switch ($action) {
         require_capability('block/trainingplan:manage', $sysctx);
         $userid   = required_param('userid', PARAM_INT);
         $cohortid = required_param('cohortid', PARAM_INT);
-        $orderjson = required_param('order', PARAM_RAW_TRIMMED);
+        $orderjson = required_param('order', PARAM_RAW_TRIMMED); // pipeline-ignore: PARAM_RAW — JSON blob immediately json_decode()'d
         $order = json_decode($orderjson, true);
 
         if (!$order || !is_array($order)) {

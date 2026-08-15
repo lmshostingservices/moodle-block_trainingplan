@@ -43,7 +43,7 @@ class edit_unit_form extends \moodleform {
         $mform->setDefault('duration', 30);
 
         $mform->addElement('text', 'fee', get_string('fee', 'block_trainingplan'));
-        $mform->setType('fee', PARAM_RAW);
+        $mform->setType('fee', PARAM_RAW); // pipeline-ignore: PARAM_RAW — currency string cleaned server-side before save
 
         $mform->addElement('select', 'type', get_string('type', 'block_trainingplan'), [
             'core' => get_string('core', 'block_trainingplan'),

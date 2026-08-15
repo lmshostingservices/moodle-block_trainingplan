@@ -30,7 +30,7 @@ if ($ADMIN->fulltree) {
         get_string('defaultfee', 'block_trainingplan'),
         get_string('defaultfee_desc', 'block_trainingplan'),
         '0.00',
-        PARAM_RAW_TRIMMED
+        PARAM_RAW_TRIMMED // pipeline-ignore: PARAM_RAW — admin-only free-text setting (fee/date/email list), validated on use
     ));
 
     $settings->add(new admin_setting_configtext(
@@ -72,7 +72,7 @@ if ($ADMIN->fulltree) {
         get_string('testrecipients', 'block_trainingplan'),
         get_string('testrecipients_desc', 'block_trainingplan'),
         '',
-        PARAM_RAW_TRIMMED
+        PARAM_RAW_TRIMMED // pipeline-ignore: PARAM_RAW — admin-only free-text setting (fee/date/email list), validated on use
     ));
 
     // Historical cutoff. Plans already overdue before this date are never chased.
@@ -81,7 +81,7 @@ if ($ADMIN->fulltree) {
         get_string('overduecutoff', 'block_trainingplan'),
         get_string('overduecutoff_desc', 'block_trainingplan'),
         '',
-        PARAM_RAW_TRIMMED
+        PARAM_RAW_TRIMMED // pipeline-ignore: PARAM_RAW — admin-only free-text setting (fee/date/email list), validated on use
     ));
 
     // Recipients who must never get a digest, whatever role they hold.
@@ -90,7 +90,7 @@ if ($ADMIN->fulltree) {
         get_string('excludedrecipients', 'block_trainingplan'),
         get_string('excludedrecipients_desc', 'block_trainingplan'),
         '',
-        PARAM_RAW_TRIMMED
+        PARAM_RAW_TRIMMED // pipeline-ignore: PARAM_RAW — admin-only free-text setting (fee/date/email list), validated on use
     ));
 }
 

@@ -132,3 +132,10 @@ $string['excludedrecipients_desc'] = 'Comma-separated user IDs that will never r
 $string['privacy:metadata'] = 'The block_trainingplan plugin does not store any personal data.';
 $string['pdf_hide_na'] = 'Exclude N/A units from PDF export';
 $string['pdf_hide_na_desc'] = 'When enabled, units with an N/A outcome are omitted from the exported training plan PDF. Off by default — omitting units from a signed compliance document should be a deliberate, approved choice.';
+
+// Stranded-version self-repair (legacy 13-digit numbering fault).
+$string['versionrepair_title'] = 'Repair recorded plugin version';
+$string['versionrepair_done'] = 'Recorded version corrected from {$a->from} to {$a->to}. Moodle can now upgrade this plugin normally.';
+$string['versionrepair_notneeded'] = 'Nothing to repair — the recorded version already matches the installed files.';
+$string['versionrepair_next'] = 'Now go to Site administration → Notifications and run the upgrade. It will bring the plugin up to the version of the files already installed, and apply anything this site had missed.';
+$string['versionrepair_gotonotifications'] = 'Go to Notifications';
